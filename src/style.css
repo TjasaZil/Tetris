@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .shape-styling {
+    @apply bg-pink-600;
+  }
+}
