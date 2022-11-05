@@ -4,16 +4,30 @@
   >
     <h1>Tetris</h1>
     <h2 class="mt-10">Score: <span id="score">120</span></h2>
-    <button id="start-button">Start button</button>
+    <button id="start-button" @click="changeButtonText">
+      <span v-if="this.status">Start Game</span><span v-else>Pause game</span>
+    </button>
+
     <Grid />
   </section>
 </template>
 
 <script>
 import Grid from "@/components/Tetris/Grid.vue";
+
 export default {
   name: "tetris",
   components: { Grid },
+  data() {
+    return {
+      status: true,
+    };
+  },
+  methods: {
+    changeButtonText() {
+      this.status = !this.status;
+    },
+  },
 };
 </script>
 

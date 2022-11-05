@@ -4,16 +4,17 @@ document.addEventListener("DOMContentLoaded", () => {
   //const grid = document.querySelectorAll(".grid-element");
   let squares = Array.from(document.querySelectorAll(".grid-element div"));
   const width = 10;
+  let timer;
 
   //const score = document.querySelector("#score");
-  //const startButton = document.querySelector("#start-button");
+  const startButton = document.querySelector("#start-button");
 
   //* SHAPES
 
   const shapes = [lShape, zShape, oShape, tShape, iShape];
 
   //* RANDOMLY SELECT THE SHAPE AND STARTING POSITION
-  //let randomInteger = Math.floor(Math.random() * shapes.length);
+
   let startingPosition = Math.floor(Math.random() * 8);
   if (startingPosition === 0 || startingPosition === 1) {
     startingPosition += 1;
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (e.keyCode === 37) {
       moveLeft();
     } else if (e.keyCode === 38) {
-      // rotateShape();
+      rotateShape();
     } else if (e.keyCode === 39) {
       moveRight();
     } else if (e.keyCode === 40) {
@@ -57,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
     stopShape();
   };
-  let timer = setInterval(moveDown, 1000);
+  //timer = setInterval(moveDown, 1000);
 
   //? write a function to stop the shape from going below the grid
   let stopShape = () => {
@@ -73,7 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       //? after the current shape stops it is time for the new shape to start falling
+
       randomShape = Math.floor(Math.random() * 5);
+
       randomRotation = Math.floor(Math.random() * 4);
       currentShape = shapes[randomShape][randomRotation];
       startingPosition = Math.floor(Math.random() * 8);
@@ -119,6 +122,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     draw();
   };
-  console.log(startingPosition);
-  console.log(timer);
+
+  //!rotate the shape
+
+  let rotateShape = () => {
+    undraw();
+    randomRotation++;
+    if (randomRotation === currentShape.length) {
+      randomRotation = 0;
+    }
+    currentShape = shapes[randomShape][randomRotation];
+    draw();
+  };
+
+  //! adding functionality to the button
+
+  startButton.addEventListener("click", () => {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    } else {
+      draw();
+      timer = setInterval(moveDown, 1000);
+    }
+  });
 });
