@@ -10,11 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector("#start-button");
 
   //* SHAPES
-
   const shapes = [lShape, zShape, oShape, tShape, iShape];
 
   //* RANDOMLY SELECT THE SHAPE AND STARTING POSITION
-
   let startingPosition = Math.floor(Math.random() * 8);
   if (startingPosition === 0 || startingPosition === 1) {
     startingPosition += 1;
@@ -36,8 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
       squares[startingPosition + index].classList.remove("shape-styling");
     });
   };
-  //?assign functions to keyCodes so the user can control the shapes
 
+  //?assign functions to keyCodes so the user can control the shapes with keyboard
   let controls = (e) => {
     if (e.keyCode === 37) {
       moveLeft();
@@ -50,6 +48,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
   document.addEventListener("keyup", controls);
+
+  //? assign controls to the arrow buttons in the document
+  const upButton = document.querySelector("#up-button");
+  const leftButton = document.querySelector("#left-button");
+  const bottomButton = document.querySelector("#bottom-button");
+  const rightButton = document.querySelector("#right-button");
+
+  upButton.addEventListener("click", () => {
+    rotateShape();
+  });
+  leftButton.addEventListener("click", () => {
+    moveLeft();
+  });
+  bottomButton.addEventListener("click", () => {
+    console.log("click");
+  });
+  rightButton.addEventListener("click", () => {
+    moveRight();
+  });
 
   //? make the shape move down every interval
   let moveDown = () => {
@@ -74,9 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       //? after the current shape stops it is time for the new shape to start falling
-
       randomShape = Math.floor(Math.random() * 5);
-
       randomRotation = Math.floor(Math.random() * 4);
       currentShape = shapes[randomShape][randomRotation];
       startingPosition = Math.floor(Math.random() * 8);
@@ -124,7 +139,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //!rotate the shape
-
   let rotateShape = () => {
     undraw();
     randomRotation++;
@@ -136,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   //! adding functionality to the button
-
   startButton.addEventListener("click", () => {
     if (timer) {
       clearInterval(timer);
