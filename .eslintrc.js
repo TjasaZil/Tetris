@@ -3,6 +3,7 @@ module.exports = {
   env: {
     node: true,
   },
+  plugins: ["testing-library", "jest"],
   extends: [
     "plugin:vue/vue3-essential",
     "eslint:recommended",
@@ -15,6 +16,10 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "vue/multi-word-component-names": "off",
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debugging-utils": "warn",
+    "testing-library/no-dom-import": "off",
     "prettier/prettier": [
       "error",
       {

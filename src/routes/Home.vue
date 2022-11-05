@@ -1,6 +1,6 @@
 <template>
   <section>
-    <section class="bg-slate-700 pt-20 h-screen text-slate-200">
+    <section class="bg-blue-700 pt-20 text-slate-200">
       <IntroText heading="home" paragraph="this is home" />
 
       <section class="flex justify-center items-center space-x-5 mt-5">
