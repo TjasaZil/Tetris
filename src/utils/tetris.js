@@ -1,19 +1,22 @@
 import { lShape, zShape, oShape, tShape, iShape } from "./Tetris/shapes";
+//import checkHighScore from "./Tetris/checkHighScore";
 
 document.addEventListener("DOMContentLoaded", () => {
   const grid = document.querySelector(".grid-element");
-  const speed = document.querySelector("#speed");
   const gameOverText = document.querySelector("#game-over");
   let squares = Array.from(document.querySelectorAll(".grid-element div"));
   const width = 10;
-  let shapeCount = 0;
   let timer;
+  let count = 600;
   let score = 0;
   const colors = ["#00CCFF", "#00FFCC", "#FFFF00", "#FF00CC", "#CC00FF"];
+  // let countShapes = 0;
 
   const scoreText = document.querySelector("#score");
   const startButton = document.querySelector("#start-button");
   const reloadButton = document.querySelector("#reload-button");
+  const speed = document.querySelector("#speed");
+  let speedCounter = 1;
 
   reloadButton.classList.add("hide-reload");
   //* SHAPES
@@ -27,9 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let randomShape = Math.floor(Math.random() * 5);
 
   let randomRotation = Math.floor(Math.random() * 4);
-  if (randomShape === 0) {
-    randomRotation = 0;
+  if (randomShape === 5) {
+    randomRotation === 1;
   }
+
   let currentShape = shapes[randomShape][randomRotation];
 
   //? draw the shape
@@ -109,6 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       //? after the current shape stops it is time for the new shape to start falling
+      // countShapes++;
+      speed.innerText = speedCounter;
+      //console.log(countShapes);
       randomShape = Math.floor(Math.random() * 5);
       randomRotation = Math.floor(Math.random() * 4);
       currentShape = shapes[randomShape][randomRotation];
@@ -116,11 +123,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (startingPosition === 0 || startingPosition === 1) {
         startingPosition += 1;
       }
-      shapeCount++;
-      console.log(shapeCount);
+
       draw();
       addScore();
       gameOver();
+      //changeCount();
+      //timer = setInterval(moveDown, count);
     }
   };
 
@@ -160,6 +168,34 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   };
 
+  //*FIX ROTATION OF TETROMINOS A THE EDGE
+  function isAtRight() {
+    return currentShape.some(
+      (index) => (startingPosition + index + 1) % width === 0
+    );
+  }
+
+  function isAtLeft() {
+    return currentShape.some(
+      (index) => (startingPosition + index) % width === 0
+    );
+  }
+
+  function checkRotatedPosition(P) {
+    P = P || startingPosition;
+    if ((P + 1) % width < 4) {
+      if (isAtRight()) {
+        startingPosition += 1;
+        checkRotatedPosition(P);
+      }
+    } else if (P % width > 5) {
+      if (isAtLeft()) {
+        startingPosition -= 1;
+        checkRotatedPosition(P);
+      }
+    }
+  }
+
   //! rotate the shape
   let rotateShape = () => {
     undraw();
@@ -168,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
       randomRotation = 0;
     }
     currentShape = shapes[randomShape][randomRotation];
+    checkRotatedPosition();
     draw();
   };
 
@@ -176,21 +213,21 @@ document.addEventListener("DOMContentLoaded", () => {
     if (timer) {
       clearInterval(timer);
       timer = null;
+      count = 770;
       bottomButton.disabled = true;
       upButton.disabled = true;
       leftButton.disabled = true;
       rightButton.disabled = true;
     } else {
       draw();
-      // timer = setInterval(moveDown, 700);
+      //changeCount();
+      timer = setInterval(moveDown, count);
       bottomButton.disabled = false;
       upButton.disabled = false;
       leftButton.disabled = false;
       rightButton.disabled = false;
-      shapeSpeed();
     }
   });
-  //! whole row is full
 
   //? add score
 
@@ -231,72 +268,34 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     ) {
       gameOverText.innerText = "Game Over";
-      checkHighScore();
-      shapeCount = 0;
-      clearInterval(timer);
+      //countShapes = 0;
+      speedCounter = 1;
+      count = 1540;
       bottomButton.disabled = true;
       upButton.disabled = true;
       leftButton.disabled = true;
       rightButton.disabled = true;
-
+      startButton.disabled = true;
       reloadButton.classList.remove("hide-reload");
+      stopTimer(timer);
     }
   }
 
-  //!high score
-
-  const NO_OF_HIGH_SCORES = 10;
-  const HIGH_SCORES = "highScores";
-  const highScoreText = document.getElementById("top-score");
-
-  function checkHighScore(score) {
-    const highScores = JSON.parse(localStorage.getItem(HIGH_SCORES)) ?? [];
-    const lowestScore = highScores[NO_OF_HIGH_SCORES - 1]?.score ?? 0;
-
-    if (score > lowestScore) {
-      highScoreText.innerHTML = score;
-      saveHighScore(score, highScores);
-    }
-  }
-  function saveHighScore(score, highScores) {
-    highScores.push(score);
-    highScores.sort((a, b) => b.score - a.score);
-    highScores.splice(NO_OF_HIGH_SCORES);
-
-    localStorage.setItem("highScores", JSON.stringify(highScores));
-  }
-
+  //* reload button
   reloadButton.addEventListener("click", () => {
     location.reload();
     reloadButton.classList.add("hide-reload");
   });
 
-  let shapeSpeed = () => {
-    if (shapeCount < 5) {
-      timer = setInterval(moveDown, 700);
-      speed.innerText = "1";
-    } else if (shapeCount >= 10) {
-      //&& shapeCount < 40
-      timer = setInterval(moveDown, 50);
-      speed.innerText = "2";
-    } else if (shapeCount >= 40) {
-      //&& shapeCount < 65
-      timer = setInterval(moveDown, 500);
-      speed.innerText = "3";
-    } else if (shapeCount >= 65) {
-      //&& shapeCount < 80
-      timer = setInterval(moveDown, 400);
-      speed.innerText = "4";
-    } else if (shapeCount >= 80) {
-      //&& shapecount <100
-      timer = setInterval(moveDown, 300);
-      speed.innerText = "5";
-    } else if (shapeCount >= 100) {
-      timer = setInterval(moveDown, 200);
-      speed.innerText = "6";
-    } else if (shapeCount >= 150) {
-      timer = setInterval(moveDown, 100);
-      speed.innerText = "Super Fast";
+  //*change timer depending on the shapes fallen
+  /* let changeCount = () => {
+    if (countShapes % 2 === 0) {
+      count = count * 0.5;
+      console.log(count);
+      speedCounter++;
     }
+  };*/
+  let stopTimer = (timer) => {
+    clearInterval(timer);
   };
 });

@@ -1,6 +1,6 @@
 # Tetris
 
-This repository holds a webpage where I host a collection of classic games made with Javascript and Vue.
+A game of tetris made with Javascript. The site is styled for screens that are more than 620px wide.
 
 ## Project setup
 
@@ -31,6 +31,10 @@ npm run test:unit
 ```
 npm run lint
 ```
+
+### Screenshot:
+
+![Alt text](../../../../../C:/Users/Tja%C5%A1a/Desktop/classic-games/src/assets/tetris.JPG)
 
 ## Build with:
 

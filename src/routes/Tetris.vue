@@ -36,24 +36,14 @@
           </button>
         </div>
         <TetrisButton />
-        <div
-          class="space-y-3 rounded-md bg-slate-700 flex flex-col justify-center items-center"
-        >
-          <h2 class="mt-2 text-lg font-medium">Top Score:</h2>
-          <div
-            id="top-score"
-            class="text-7xl font-semibold text-amber-600 p-6"
-          ></div>
-        </div>
-        <div
-          class="space-x-3 rounded-md bg-slate-700 flex justify-center items-center px-2"
+        <!--  <div
+          class="space-x-3 rounded-md bg-slate-700 flex justify-center items-center py-6 px-10"
         >
           <h2 class="mt-2 text-lg font-medium">Speed:</h2>
-          <div
-            id="speed"
-            class="text-2xl font-semibold text-red-600 py-6"
-          ></div>
-        </div>
+          <span id="speed" class="text-2xl font-semibold text-amber-600"
+            >1</span
+          >
+        </div>-->
       </div>
     </section>
   </section>
