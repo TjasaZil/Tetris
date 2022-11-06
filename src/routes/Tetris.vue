@@ -3,7 +3,8 @@
     class="w-full flex flex-col justify-center items-center mx-auto bg-slate-900 text-slate-500 h-screen"
   >
     <h1 class="font-thin text-7xl uppercase">Tetris</h1>
-
+    <div id="game-over" class="text-4xl font-semibold text-red-600 p-6"></div>
+    <button id="reload-button">Reload</button>
     <section
       class="w-5/6 max-w-3xl space-x-10 flex justify-center items-start mx-auto mt-8"
     >
@@ -39,9 +40,10 @@
           class="space-y-3 rounded-md bg-slate-700 flex flex-col justify-center items-center"
         >
           <h2 class="mt-2 text-lg font-medium">Top Score:</h2>
-          <div id="top-score" class="text-7xl font-semibold text-amber-600 p-6">
-            top
-          </div>
+          <div
+            id="top-score"
+            class="text-7xl font-semibold text-amber-600 p-6"
+          ></div>
         </div>
         <div
           class="space-x-3 rounded-md bg-slate-700 flex justify-center items-center px-2"
