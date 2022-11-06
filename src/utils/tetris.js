@@ -1,12 +1,16 @@
 import { lShape, zShape, oShape, tShape, iShape } from "./Tetris/shapes";
 
 document.addEventListener("DOMContentLoaded", () => {
-  //const grid = document.querySelectorAll(".grid-element");
+  const grid = document.querySelector(".grid-element");
+  const speed = document.querySelector("#speed");
   let squares = Array.from(document.querySelectorAll(".grid-element div"));
   const width = 10;
+  let shapeCount = 0;
   let timer;
+  let score = 0;
+  const colors = ["#00CCFF", "#00FFCC", "#FFFF00", "#FF00CC", "#CC00FF"];
 
-  //const score = document.querySelector("#score");
+  const scoreText = document.querySelector("#score");
   const startButton = document.querySelector("#start-button");
 
   //* SHAPES
@@ -19,13 +23,19 @@ document.addEventListener("DOMContentLoaded", () => {
     startingPosition += 1;
   }
   let randomShape = Math.floor(Math.random() * 5);
+
   let randomRotation = Math.floor(Math.random() * 4);
+  if (randomShape === 0) {
+    randomRotation = 1;
+  }
   let currentShape = shapes[randomShape][randomRotation];
 
   //? draw the shape
   let draw = () => {
     currentShape.forEach((index) => {
       squares[startingPosition + index].classList.add("shape-styling");
+      squares[startingPosition + index].style.backgroundColor =
+        colors[randomShape];
     });
   };
 
@@ -33,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let undraw = () => {
     currentShape.forEach((index) => {
       squares[startingPosition + index].classList.remove("shape-styling");
+      squares[startingPosition + index].style.backgroundColor = "";
     });
   };
 
@@ -45,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (e.keyCode === 39) {
       moveRight();
     } else if (e.keyCode === 40) {
-      //faster down
+      moveDown();
     }
   };
   document.addEventListener("keyup", controls);
@@ -63,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
     moveLeft();
   });
   bottomButton.addEventListener("click", () => {
-    console.log("click");
+    moveDown();
   });
   rightButton.addEventListener("click", () => {
     moveRight();
@@ -76,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
     stopShape();
   };
-  //timer = setInterval(moveDown, 1000);
 
   //? write a function to stop the shape from going below the grid
   let stopShape = () => {
@@ -99,7 +109,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (startingPosition === 0 || startingPosition === 1) {
         startingPosition += 1;
       }
+      shapeCount++;
+      console.log(shapeCount);
+      //shapeSpeed();
       draw();
+      addScore();
+      gameOver();
     }
   };
 
@@ -157,7 +172,71 @@ document.addEventListener("DOMContentLoaded", () => {
       timer = null;
     } else {
       draw();
-      timer = setInterval(moveDown, 1000);
+      timer = setInterval(moveDown, 700);
     }
   });
+  //! whole row is full
+
+  //? add score
+
+  let addScore = () => {
+    for (let i = 0; i < 199; i = i + width) {
+      const row = [
+        i,
+        i + 1,
+        i + 2,
+        i + 3,
+        i + 4,
+        i + 5,
+        i + 6,
+        i + 7,
+        i + 8,
+        i + 9,
+      ];
+      if (
+        row.every((index) => squares[index].classList.contains("stop-shape"))
+      ) {
+        score = score + 10;
+        scoreText.innerText = score;
+        row.forEach((index) => {
+          squares[index].classList.remove("stop-shape");
+          squares[index].classList.remove("shape-styling");
+          squares[index].style.backgroundColor = "";
+        });
+        const removeRow = squares.splice(i, width);
+        squares = removeRow.concat(squares);
+        squares.forEach((cell) => grid.appendChild(cell));
+      }
+    }
+  };
+  function gameOver() {
+    if (
+      currentShape.some((index) =>
+        squares[startingPosition + index].classList.contains("stop-shape")
+      )
+    ) {
+      scoreText.innerText = "Game Over";
+      shapeCount = 0;
+      clearInterval(timer);
+    }
+  }
+  let shapeSpeed = () => {
+    if (shapeCount < 10) {
+      timer = setInterval(moveDown, 700);
+      speed.innerText = "1";
+    } else if (shapeCount >= 10 && shapeCount < 40) {
+      timer = setInterval(moveDown, 650);
+      speed.innerText = "2";
+    } else if (shapeCount >= 40 && shapeCount < 65) {
+      timer = setInterval(moveDown, 600);
+      speed.innerText = "3";
+    } else if (shapeCount >= 65 && shapeCount < 80) {
+      timer = setInterval(moveDown, 550);
+      speed.innerText = "4";
+    } else if (shapeCount >= 80) {
+      timer = setInterval(moveDown, 500);
+      speed.innerText = "5";
+    }
+  };
+  shapeSpeed();
 });

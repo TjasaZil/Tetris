@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-blue-700 text-blue-200">
+  <section class="bg-slate-700 text-slate-200">
     <Tetris />
   </section>
 </template>
