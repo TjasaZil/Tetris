@@ -15,8 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const scoreText = document.querySelector("#score");
   const startButton = document.querySelector("#start-button");
   const reloadButton = document.querySelector("#reload-button");
-  const speed = document.querySelector("#speed");
-  let speedCounter = 1;
+  //const speed = document.querySelector("#speed");
+  //let speedCounter = 1;
 
   reloadButton.classList.add("hide-reload");
   //* SHAPES
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       //? after the current shape stops it is time for the new shape to start falling
       // countShapes++;
-      speed.innerText = speedCounter;
+      //speed.innerText = speedCounter;
       //console.log(countShapes);
       randomShape = Math.floor(Math.random() * 5);
       randomRotation = Math.floor(Math.random() * 4);
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       gameOverText.innerText = "Game Over";
       //countShapes = 0;
-      speedCounter = 1;
+      // speedCounter = 1;
       count = 1540;
       bottomButton.disabled = true;
       upButton.disabled = true;
