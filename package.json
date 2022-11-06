@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "eslint-plugin-jest": "^27.1.4",
     "vue": "^3.2.13",
+    "vue-plugin-load-script": "^2.1.1",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

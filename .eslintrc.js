@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   root: true,
   env: {
@@ -8,6 +9,7 @@ module.exports = {
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "plugin:prettier/recommended",
+    "plugin:testing-library/vue",
   ],
   parserOptions: {
     parser: "@babel/eslint-parser",

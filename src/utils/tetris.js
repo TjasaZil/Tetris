@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const startButton = document.querySelector("#start-button");
 
   //* SHAPES
+
   const shapes = [lShape, zShape, oShape, tShape, iShape];
 
   //* RANDOMLY SELECT THE SHAPE AND STARTING POSITION
@@ -138,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   };
 
-  //!rotate the shape
+  //! rotate the shape
   let rotateShape = () => {
     undraw();
     randomRotation++;

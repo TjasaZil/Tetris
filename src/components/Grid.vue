@@ -18,12 +18,18 @@
 </template>
 
 <script>
-import tetrisUtil from "@/utils/tetris";
+import * as tetrisUtil from "@/utils/tetris";
+
 export default {
   name: "Grid",
-  created() {
-    tetrisUtil;
+  data() {
+    return {
+      tetrisUtil,
+    };
   },
+  /* mounted() {
+    tetrisUtil;
+  },*/
 };
 </script>
 

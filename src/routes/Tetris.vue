@@ -5,7 +5,7 @@
     <h1 class="font-bold text-xl uppercase">Tetris</h1>
     <h2 class="mt-5 text-lg font-medium">
       Score:
-      <span id="score" class="text-2xl font-semibold text-green-600">120</span>
+      <span id="score" class="text-4xl font-semibold text-green-600">120</span>
     </h2>
     <button
       id="start-button"
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import Grid from "@/components/Tetris/Grid.vue";
-import TetrisButton from "@/components/Tetris/TetrisButton.vue";
+import Grid from "@/components/Grid.vue";
+import TetrisButton from "@/components/TetrisButton.vue";
 
 export default {
   name: "tetris",

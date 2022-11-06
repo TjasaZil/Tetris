@@ -12,10 +12,11 @@
 </template>
 
 <script>
-import tetrisUtil from "@/utils/tetris";
+//import { loadScript } from "vue-plugin-load-script";
+import tetrisUtil from "@/utils/tetris.js";
 export default {
   name: "TetrisButton",
-  created() {
+  mounted() {
     tetrisUtil;
   },
 };
