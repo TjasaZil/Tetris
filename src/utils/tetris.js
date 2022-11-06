@@ -10,13 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   let count = 600;
   let score = 0;
   const colors = ["#00CCFF", "#00FFCC", "#FFFF00", "#FF00CC", "#CC00FF"];
-  // let countShapes = 0;
 
   const scoreText = document.querySelector("#score");
   const startButton = document.querySelector("#start-button");
   const reloadButton = document.querySelector("#reload-button");
-  //const speed = document.querySelector("#speed");
-  //let speedCounter = 1;
 
   reloadButton.classList.add("hide-reload");
   //* SHAPES
@@ -28,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
     startingPosition += 1;
   }
   let randomShape = Math.floor(Math.random() * 5);
-
   let randomRotation = Math.floor(Math.random() * 4);
-  if (randomShape === 5) {
-    randomRotation === 1;
+  //!check if the shape is i and set the rotation for it
+  if ((randomShape === 4 && randomRotation === 1) || randomRotation === 3) {
+    randomRotation = 0;
   }
 
   let currentShape = shapes[randomShape][randomRotation];
@@ -113,11 +110,12 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
       //? after the current shape stops it is time for the new shape to start falling
-      // countShapes++;
-      //speed.innerText = speedCounter;
-      //console.log(countShapes);
       randomShape = Math.floor(Math.random() * 5);
       randomRotation = Math.floor(Math.random() * 4);
+      //!check if the shape is i and set the rotation for it
+      if ((randomShape === 4 && randomRotation === 1) || randomRotation === 3) {
+        randomRotation = 0;
+      }
       currentShape = shapes[randomShape][randomRotation];
       startingPosition = Math.floor(Math.random() * 8);
       if (startingPosition === 0 || startingPosition === 1) {
@@ -127,8 +125,6 @@ document.addEventListener("DOMContentLoaded", () => {
       draw();
       addScore();
       gameOver();
-      //changeCount();
-      //timer = setInterval(moveDown, count);
     }
   };
 
@@ -168,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     draw();
   };
 
-  //*FIX ROTATION OF TETROMINOS A THE EDGE
+  //*FIX ROTATION OF shapes A THE EDGE
   function isAtRight() {
     return currentShape.some(
       (index) => (startingPosition + index + 1) % width === 0
@@ -220,7 +216,6 @@ document.addEventListener("DOMContentLoaded", () => {
       rightButton.disabled = true;
     } else {
       draw();
-      //changeCount();
       timer = setInterval(moveDown, count);
       bottomButton.disabled = false;
       upButton.disabled = false;
@@ -268,9 +263,8 @@ document.addEventListener("DOMContentLoaded", () => {
       )
     ) {
       gameOverText.innerText = "Game Over";
-      //countShapes = 0;
-      // speedCounter = 1;
-      count = 1540;
+
+      count = 770;
       bottomButton.disabled = true;
       upButton.disabled = true;
       leftButton.disabled = true;
@@ -287,14 +281,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reloadButton.classList.add("hide-reload");
   });
 
-  //*change timer depending on the shapes fallen
-  /* let changeCount = () => {
-    if (countShapes % 2 === 0) {
-      count = count * 0.5;
-      console.log(count);
-      speedCounter++;
-    }
-  };*/
   let stopTimer = (timer) => {
     clearInterval(timer);
   };
